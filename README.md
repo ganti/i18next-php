@@ -1,36 +1,51 @@
 i18next-php
 ===================
-PHP class for basic [i18next](https://github.com/jamuhl/i18next) functionality.
 
+PHP class for basic [i18next](https://www.i18next.com) functionality.
+
+  
 ## Features
 
 - Support for [variables](http://i18next.com/pages/doc_features.html#interpolation)
 - Support for [context](http://i18next.com/pages/doc_features.html#context)
 - Support for [basic sprintf](http://i18next.com/pages/doc_features.html#sprintf)
 - Support for [basic plural forms](http://i18next.com/pages/doc_features.html#plurals)
-- Missing interval plurals
-
 - Support for [multiline in JSON](http://i18next.com/pages/doc_features.html)
+
+### Missing Features
+- Missing [interval plurals](http://i18next.com/pages/doc_features.html#plurals)
+  
 
 ## Usage
 
+### basic usage
 ```php
 // init i18next instance
 i18next::init('en');
 
 // get translation by key
-echo i18next::getTranslation('common.dog');
+echo  i18next::getTranslation('common.dog');
 ```
+
+### substitution of variables
+```php
+echo  i18next::getTranslation('common.name_age', array('name' => "Elisa", "age" => 32));
+```
+  
 
 ## Methods
 
 ### i18next::init( string $languageKey [, string $path ] );
+
 Loads translation files from given path. Looks for `translation.json` by default.
+
 ```php
 i18next::init('en', 'my/path/');
 // loads my/path/translation.json
 ```
+
 You can also use variables and split namespaces and languages to different files.
+
 ```php
 i18next::init('en', 'languages/__lng__/__ns__.json');
 // loads languages/en/common.json, languages/fi/common.json, etc...
@@ -39,6 +54,7 @@ i18next::init('en', 'languages/__lng__/__ns__.json');
 Method throws an exception if no files are found or the json can not be parsed.
 
 ### mixed i18next::getTranslation( string $key [, array $variables ] );
+
 Returns translated string by key.
 ```php
 i18next::getTranslation('common.cat', array('count' => 2, 'lng' => 'fi'));
@@ -48,36 +64,37 @@ i18next::getTranslation('common.cat', array('count' => 2, 'lng' => 'fi'));
 Checks if translated string exists.
 
 ### void i18next::setLanguage( string $language [, string $fallback ] );
+
 Changes language.
 
 ### array i18next::getMissingTranslations();
 Gets an array of missing translations.
-```
+```php
 array(1) {
-    [0]=> array(2) {
-        ["language"]=> string(2) "en"
-        ["key"]=> string(14) "common.unknown"
-    }
+	[0]=> array(2) {
+	["language"]=> string(2) "en"
+	["key"]=> string(14) "common.unknown"
+	}
 }
 ```
 
 ## Multilines in JSON-arrays
 You can have html content written with multilines in JSON File
-```
+```json
 {
-	"en": {
-		"common": {
-			"thedoglovers":["The Dog Lovers by Spike Milligan",
-"So they bought you",
-"And kept you in a",
-"Very good home"]
-        }
-	}
+  "en": {
+    "common": {
+        "thedoglovers":["The Dog Lovers by Spike Milligan",
+			"So they bought you",
+			"And kept you in a",
+			"Very good home"]
+       }
+  }
 }
 ```
 
+  
+
 # Development
-
 ## Run Tests
-
 `composer test`
