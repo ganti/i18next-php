@@ -31,8 +31,8 @@ echo  i18next::getTranslation('animal.cat');
 ### substitution of variables
 ```json
 "common": {
-			"name_age" : "{{name}} is {{age}} years old"
-		}
+	"name_age" : "{{name}} is {{age}} years old"
+}
 ```
 
 ```php
