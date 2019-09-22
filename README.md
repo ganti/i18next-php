@@ -33,7 +33,7 @@ echo  i18next::getTranslation('animal.cat');
 "common": {
 			"name_age" : "{{name}} is {{age}} years old"
 		}
-´´´
+```
 
 ```php
 echo  i18next::getTranslation('common.name_age', array('name' => "Elisa", "age" => 32));
