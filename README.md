@@ -16,9 +16,8 @@ PHP class for basic [i18next](https://www.i18next.com) functionality.
 - Missing [interval plurals](http://i18next.com/pages/doc_features.html#plurals)
 - Formatting [date, datetime, time, strings](https://www.i18next.com/translation-function/formatting)
 
-- Formatting
-## Usage
 
+## Usage
 ### basic usage
 ```php
 // init i18next instance
@@ -125,7 +124,6 @@ echo  i18next::getTranslation('people.friend', array('count' => 33, 'context' =>
 
 
 ## Methods
-
 ### i18next::init( string $languageKey [, string $path ] );
 
 Loads translation files from given path. Looks for `translation.json` by default.
