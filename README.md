@@ -14,8 +14,9 @@ PHP class for basic [i18next](https://www.i18next.com) functionality.
 
 ### Missing Features
 - Missing [interval plurals](http://i18next.com/pages/doc_features.html#plurals)
-  
+- Formatting [date, datetime, time, strings](https://www.i18next.com/translation-function/formatting)
 
+- Formatting
 ## Usage
 
 ### basic usage
@@ -24,14 +25,104 @@ PHP class for basic [i18next](https://www.i18next.com) functionality.
 i18next::init('en');
 
 // get translation by key
-echo  i18next::getTranslation('common.dog');
+echo  i18next::getTranslation('animal.cat');
 ```
+**Output**: cat
 
 ### substitution of variables
+```json
+"common": {
+			"name_age" : "{{name}} is {{age}} years old"
+		}
+´´´
+
 ```php
 echo  i18next::getTranslation('common.name_age', array('name' => "Elisa", "age" => 32));
 ```
-  
+**Output**:
+``` 
+	Elisa is 32 years old
+ ```
+
+### plural forms
+There are diffrent ways on how to store plural forms in json
+
+```json
+"animal":{
+	"dog": "dog",
+	"dog_plural": "dogs",
+
+	"cat": "{{count}} cat",
+	"cat_plural": "{{count}} cats",
+
+	"elephant": "{{count}} elephant",
+	"elephant_0": "no elephants",
+	"elephant_2": "{{count}} elephants",
+
+	"spiderWithCount" : "{{count}} spider",
+	"spiderWithCount_plural" : "{{count}} spiders",
+	"spiderWithCount_plural_0" : "no spiders"
+}
+```
+
+ ```php
+// get translation by key with plural forms
+echo  i18next::getTranslation('animal.cat', array('count' => 2));
+echo  i18next::getTranslation('animal.cat', 2);
+```
+**Output**: 
+ ```
+	2 cats
+	2 cats
+ ```
+
+
+ ```php
+echo  i18next::getTranslation('animal.elephant', array('count' => 0));
+echo  i18next::getTranslation('animal.elephant', array('count' => 1));
+echo  i18next::getTranslation('animal.elephant', array('count' => 2));
+echo  i18next::getTranslation('animal.elephant', array('count' => 100));
+```
+**Output**:
+ ```
+	no elephants
+	1 elephant
+	2 elephants
+	100 elephants
+```
+
+### Context
+By providing a context you can differ translations. Eg. useful to provide gender specific translations.
+ ```json
+"people":{
+	"friend" : "A friend",
+	"friend_female" : "A girlfriend",
+	"friend_female_plural" : "{{count}} girlfriends",
+	"friend_male" : "A boyfriend",
+	"friend_male_0" : "no boyfriend",
+	"friend_male_plural" : "{{count}} boyfriends"
+}
+```
+```php
+echo  i18next::getTranslation('people.friend');
+echo  i18next::getTranslation('people.friend', array('context' => 'female'));
+echo  i18next::getTranslation('people.friend', array('count' => 2, 'context' => 'female'));
+echo  i18next::getTranslation('people.friend', array('count' => 0, 'context' => 'male'));
+echo  i18next::getTranslation('people.friend', array('count' => 1, 'context' => 'male'));
+echo  i18next::getTranslation('people.friend', array('count' => 33, 'context' => 'male'));
+```
+**Output**:
+ ```
+	A friend
+	A girlfirend
+	2 girlfriends
+	no boyfriends
+	A boyfriend
+	33 boyfriends
+```
+
+
+
 
 ## Methods
 
